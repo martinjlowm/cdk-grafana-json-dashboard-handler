@@ -15,6 +15,7 @@ test('create app', () => {
     objectKey: 'ehh/heh/test.json',
     localFilePath: 'test/dashboard/test-dashboard.json',
   });
+
   Template.fromStack(stack).hasResource('AWS::Lambda::Function', {});
   Template.fromStack(stack).hasResource('AWS::CloudFormation::CustomResource', {});
   // TODO implement check for no subnetting
