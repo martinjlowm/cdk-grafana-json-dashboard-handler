@@ -1,7 +1,11 @@
-{ pkgs, lib, config, inputs, ... }:
-
 {
-  packages = [ pkgs.nodejs_23 pkgs.biome ];
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}: {
+  packages = [pkgs.nodejs_23 pkgs.biome];
 
   languages = {
     typescript.enable = true;
@@ -12,7 +16,7 @@
       biome = {
         package = pkgs.biome;
         enable = true;
-        entry = "${pkgs.biome}/bin/biome check --write --no-errors-on-unmatched --diagnostic-level=error --verbose";
+        entry = "${pkgs.biome}/bin/biome check --write --no-errors-on-unmatched --diagnostic-level=error --colors=off --verbose";
       };
       prettier = {
         enable = true;

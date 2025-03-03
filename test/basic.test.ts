@@ -1,8 +1,8 @@
-import * as s3 from '@aws-cdk/aws-s3';
-import * as sm from '@aws-cdk/aws-secretsmanager';
-import * as cdk from '@aws-cdk/core';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as sm from 'aws-cdk-lib/aws-secretsmanager';
+import * as cdk from 'aws-cdk-lib/core';
 import { GrafanaHandler } from '../src/index';
-import '@aws-cdk/assert/jest';
+import 'aws-cdk-lib/assert/jest';
 
 test('create app', () => {
   const app = new cdk.App();

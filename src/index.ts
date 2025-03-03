@@ -1,13 +1,13 @@
-import * as path from 'path';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as iam from '@aws-cdk/aws-iam';
-import * as kms from '@aws-cdk/aws-kms';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as logs from '@aws-cdk/aws-logs';
-import * as sm from '@aws-cdk/aws-secretsmanager';
-import * as cdk from '@aws-cdk/core';
+import * as path from 'node:path';
+import type * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import type * as kms from 'aws-cdk-lib/aws-kms';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as logs from 'aws-cdk-lib/aws-logs';
+import type * as sm from 'aws-cdk-lib/aws-secretsmanager';
+import * as cdk from 'aws-cdk-lib/core';
 /* eslint-disable */
-const md5File = require("md5-file");
+const md5File = require('md5-file');
 /* eslint-enable */
 
 /**
@@ -87,11 +87,7 @@ export class GrafanaHandler extends cdk.Construct {
       };
     }
 
-    this.grafanaHandlerFunction = new lambda.SingletonFunction(
-      this,
-      'grafanaHandlerFunction',
-      singletonFunctionProps,
-    );
+    this.grafanaHandlerFunction = new lambda.SingletonFunction(this, 'grafanaHandlerFunction', singletonFunctionProps);
     this.grafanaHandlerFunction.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ['logs:*'],
@@ -101,10 +97,7 @@ export class GrafanaHandler extends cdk.Construct {
     this.grafanaHandlerFunction.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ['s3:List*', 's3:Get*'],
-        resources: [
-          `arn:aws:s3:::${props.bucketName}`,
-          `arn:aws:s3:::${props.bucketName}/*`,
-        ],
+        resources: [`arn:aws:s3:::${props.bucketName}`, `arn:aws:s3:::${props.bucketName}/*`],
       }),
     );
     this.grafanaHandlerFunction.addToRolePolicy(
@@ -139,13 +132,9 @@ export class GrafanaHandler extends cdk.Construct {
 
     // multiple CRs must be able to call the shared singleton lambda function, so use
     // the cr properties to pass in the imageUri via event['ResourceProperties']['grafana_pw']
-    this.grafanaFunctionCRHandler = new cdk.CustomResource(
-      this,
-      'grafanaHandlerCR',
-      {
-        serviceToken: this.grafanaHandlerFunction.functionArn,
-        properties: crProps,
-      },
-    );
+    this.grafanaFunctionCRHandler = new cdk.CustomResource(this, 'grafanaHandlerCR', {
+      serviceToken: this.grafanaHandlerFunction.functionArn,
+      properties: crProps,
+    });
   }
 }
