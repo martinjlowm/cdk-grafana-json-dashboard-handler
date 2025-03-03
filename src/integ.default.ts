@@ -4,6 +4,8 @@ import * as s3assets from 'aws-cdk-lib/aws-s3-deployment';
 import * as sm from 'aws-cdk-lib/aws-secretsmanager';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
 import * as cdk from 'aws-cdk-lib/core';
+import type { Construct } from 'constructs';
+
 import { GrafanaHandler } from './index';
 
 const env = {
@@ -23,7 +25,7 @@ function getRequiredEnvVariable(name: string) {
 
 const app = new cdk.App();
 export class TestStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const testingVpc = ec2.Vpc.fromLookup(this, 'dataSourceTestingVpc', {
