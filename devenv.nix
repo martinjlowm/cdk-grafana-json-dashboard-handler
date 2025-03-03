@@ -20,7 +20,7 @@
       };
       prettier = {
         enable = true;
-        files = "\\.(gql|ya?ml)$";
+        files = "\\.(ya?ml)$";
       };
       alejandra.enable = true;
       statix = {
