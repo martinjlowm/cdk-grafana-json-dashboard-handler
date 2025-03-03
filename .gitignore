@@ -52,3 +52,12 @@ junit.xml
 tsconfig.json
 !/API.md
 !/.github/workflows/upgrade-main.yml
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
