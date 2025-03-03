@@ -6,9 +6,9 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import type * as sm from 'aws-cdk-lib/aws-secretsmanager';
 import * as cdk from 'aws-cdk-lib/core';
-/* eslint-disable */
+import { Construct } from 'constructs';
+
 const md5File = require('md5-file');
-/* eslint-enable */
 
 /**
  * Properties for a newly created Grafana Handler Construct.
@@ -52,15 +52,15 @@ export interface GrafanaHandlerProps {
   // TODO add support for custom KMS encryption in the function code
 }
 
-export class GrafanaHandler extends cdk.Construct {
+export class GrafanaHandler extends Construct {
   public readonly grafanaHandlerFunction: lambda.SingletonFunction;
   public readonly grafanaFunctionCRHandler: cdk.CustomResource;
-  constructor(scope: cdk.Construct, id: string, props: GrafanaHandlerProps) {
+  constructor(scope: Construct, id: string, props: GrafanaHandlerProps) {
     super(scope, id);
 
     let singletonFunctionProps: lambda.SingletonFunctionProps = {
       uuid: 'staticuuidforgrafanahandlerfunctionjidjpvpdwd93r9',
-      runtime: lambda.Runtime.PYTHON_3_8,
+      runtime: lambda.Runtime.PYTHON_3_13,
       code: lambda.Code.fromAsset(path.join(__dirname, '../function')),
       handler: 'handler.main',
       logRetention: logs.RetentionDays.ONE_DAY,
